@@ -1,4 +1,8 @@
 (function() {
+	var me = this;
+	var global = function() {
+		return me;
+	}
     var deepEqual = function(a, b) {
         if (a===b) {
             return true
@@ -7,14 +11,14 @@
             return true;
         }
         if (typeof a !=  typeof b) {
+			console.log("type not match:");
+			console.log(a);
+			console.log(b);
             return false;
         }
         var type = typeof a;
         if (type == "function") {
             return true;
-        }
-        if (!deepEqual(Object.keys(a),Object.keys(b))) {
-            return false
         }
         var aIsArray = a instanceof Array;
         var bIsArray = b instanceof Array;
@@ -23,15 +27,32 @@
         }
         if (aIsArray && bIsArray) {
             if (a.length != b.length) {
+			console.log("length does not match:");
+			console.log(a);
+			console.log(b);
                 return false;
             }
             var length = a;
             for (var x = 0; x < a; x++) {
                 if (!deepEqual(a[x], b[x])) {
+			console.log("elem not match:");
+			console.log(a[x]);
+			console.log(b[x]);
                     return false;
                 }
             }
         } else {
+			var aKeys = Object.keys(a);
+			var bKeys = Object.keys(b);
+			aKeys.sort();
+			bKeys.sort();
+			if (!deepEqual(aKeys, bKeys)) {
+			console.log("keys not match:");
+			console.log(aKeys);
+			console.log(bKeys);
+				
+				return false
+			}
             var keys = Object.keys(a);
             while(keys.length > 0) {
                 var key = keys.shift();
@@ -42,6 +63,33 @@
         }
         return true;
     }
+	var expectError = function(operation) {
+		return function(message) {
+			var error;
+			try {
+				operation();
+			} catch(e) {
+				console.log(e);
+				error = e;
+			}
+			if (!error) {
+				throw new Error("Error not thrown")
+			}
+			if (error.message != message) {
+				throw new Error("Actual error does not match expected:\nActual:"+error.message+"\nExpected:"+message);
+			}
+		}
+	}
+	var expectNoError = function(operation) {
+		return function() {
+			var error;
+			try {
+				operation();
+			} catch(e) {
+				throw new Error("error thrown: "+error.message);
+			}
+		}
+	}
     var deepProp = function(obj, key, value) {
         var steps = key.split(".");
         var temp = obj;
@@ -128,7 +176,9 @@
         var to = {};
         var not = {};
         raw.forEach(build(to,"msg",false,actual));
+		to.error = expectError(actual);
         raw.forEach(build(not,"not",true,actual));
+		not.error = expectNoError(actual);
         to.not = not;
         return {to:to};
 	}

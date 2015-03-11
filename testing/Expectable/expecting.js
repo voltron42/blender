@@ -17,7 +17,7 @@ var expecting = [{
 	"msg": "Value does not exist!",
 	"not": "Value exists:\n\tValue:$$$",
 	"params": "",
-	"cond": "typeof this != undefined && this != null"
+	"cond": "this != undefined && this != null && this != global()"
 },
 {
 	"path": "match",

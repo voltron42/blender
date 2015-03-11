@@ -18,14 +18,14 @@
 				return [
 					"<li class=\"",
 					(error?"fail":"success"),
-					"\">",
+					"\"><pre>",
 					test.name,
 					(error?[
 						"<ul><li>",
 						error,
 						"</li></ul>",
 					].join(""):""),
-					"</li>",
+					"</pre></li>",
 				].join("");
 			}).join("");
 		}
