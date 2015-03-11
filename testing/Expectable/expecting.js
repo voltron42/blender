@@ -73,7 +73,7 @@ var expecting = [{
 	"msg": "",
 	"not": "",
 	"params": "",
-	"cond": "((this instanceof Array) || typeof this == 'string')&& this.length == 0) || (typeof this == 'object' && Object.keys(this).length == 0)"
+	"cond": "(((this instanceof Array) || typeof this == 'string')&& this.length == 0) || (typeof this == 'object' && Object.keys(this).length == 0)"
 },
 {
 	"path": "be.true",

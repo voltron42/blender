@@ -27,7 +27,7 @@
             }
             var length = a;
             for (var x = 0; x < a; x++) {
-                if (!deepEqual(a[x], b[x]) {
+                if (!deepEqual(a[x], b[x])) {
                     return false;
                 }
             }
@@ -66,17 +66,19 @@
 	var contains = {
 		all:function(haystack, needles) {
 			return needles.filter(needleFilter(haystack)).length == needles.length;
-		}
+		},
 		any:function(haystack, needles) {
 			return needles.filter(needleFilter(haystack)).length == needles.length;
 		}
 	}
 	var raw = expecting.map(function(spec){
+		var obj = {};
+		eval("obj.fn = function("+spec.params+"){return "+spec.cond+"};")
 		return {
 			path:spec.path,
 			msg:spec.msg,
 			not:spec.not,
-			fn:eval("function("+spec.params+"){return "+spec.cond+"};")
+			fn:obj.fn
 		};
 	});
     var argsToArray = function(args) {
@@ -87,7 +89,7 @@
         return out;
     }
     var publish = function(message,vars) {
-        var fields = messae.split("$$$");
+        var fields = message.split("$$$");
         var length = Math.max(fields.length, vars.length);
         var out = [];
         for (var x = 0; x < length; x++) {
@@ -100,7 +102,7 @@
         }
         return out.join("");
     }
-	var build = function(root,label,actual) {
+	var build = function(root,label,cond,actual) {
 		return function(spec) {
 			var path = spec.path.split(".");
 			var name = path.pop();
@@ -110,8 +112,8 @@
 				temp = temp[step];
 			});
 			var fn = function() {
-				if (!spec.fn.apply(actual,arguments)) {
-					throw new Error(publish(spec[label],[].concat(actual,argsToArray(arguments))));
+				if (cond == spec.fn.apply(actual,arguments)) {
+					throw new Error(publish(spec[label],[].concat(actual,argsToArray(arguments))));;
 				}
 			};
 			if (typeof temp[name] == 'object') {
@@ -125,9 +127,9 @@
 	this.expect = function(actual) {
         var to = {};
         var not = {};
-        raw.forEach(build(to,"msg",actual));
-        raw.forEach(build(not,"not",actual));
+        raw.forEach(build(to,"msg",false,actual));
+        raw.forEach(build(not,"not",true,actual));
         to.not = not;
-        return to;
+        return {to:to};
 	}
 })()
