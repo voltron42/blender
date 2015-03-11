@@ -1,4 +1,4 @@
-[{
+var expecting = [{
 	"path": "equal",
 	"msg": "Values are not equal:\n\tActual: $$$,\n\tExpected: $$$",
 	"not": "Values are equal:\n\tActual: $$$,\n\tExpected: $$$",
@@ -193,4 +193,4 @@
 	"not": "Substring is present in value:\n\tValue: $$$,\n\tSubstring: $$$",
 	"params": "needle",
 	"cond": "this.indexOf(needle) >= 0"
-}]
+}];

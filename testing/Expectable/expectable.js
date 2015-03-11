@@ -1,18 +1,74 @@
 (function() {
+    var deepEqual = function(a, b) {
+        if (a===b) {
+            return true
+        }
+        if (a == b) {
+            return true;
+        }
+        if (typeof a !=  typeof b) {
+            return false;
+        }
+        var type = typeof a;
+        if (type == "function") {
+            return true;
+        }
+        if (!deepEqual(Object.keys(a),Object.keys(b))) {
+            return false
+        }
+        var aIsArray = a instanceof Array;
+        var bIsArray = b instanceof Array;
+        if ((aIsArray && !bIsArray) || (!aIsArray && bIsArray)) {
+            return false;
+        }
+        if (aIsArray && bIsArray) {
+            if (a.length != b.length) {
+                return false;
+            }
+            var length = a;
+            for (var x = 0; x < a; x++) {
+                if (!deepEqual(a[x], b[x]) {
+                    return false;
+                }
+            }
+        } else {
+            var keys = Object.keys(a);
+            while(keys.length > 0) {
+                var key = keys.shift();
+                if (!deepEqual(a[key],b[key])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    var deepProp = function(obj, key, value) {
+        var steps = key.split(".");
+        var temp = obj;
+        while (steps.length > 0) {
+            var step = steps.shift();
+            if (!(step in temp)) {
+                return false;
+            }
+            temp = temp[step];
+        }
+        return deepEqual(temp, value);
+    }
 	var deep = {
-		eq:function(a, b) {
-			
-		},
-		prop:function(obj, key, value) {
-			
-		},
+		eq:deepEqual,
+		prop:deepProp,
 	}
+    var needleFilter = function(haystack) {
+        return function(needle) {
+            return haystack.indexOf(needle) >= 0;
+        }
+    }
 	var contains = {
 		all:function(haystack, needles) {
-			
+			return needles.filter(needleFilter(haystack)).length == needles.length;
 		}
 		any:function(haystack, needles) {
-			
+			return needles.filter(needleFilter(haystack)).length == needles.length;
 		}
 	}
 	var raw = expecting.map(function(spec){
