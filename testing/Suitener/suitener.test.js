@@ -21,6 +21,26 @@ tests.apply({
 		
 		console.log = temp;
 	}
+},{
+	name:"suitener test fails",
+	fn:function() {
+		var temp = console.log;
+		var logs = [];
+		console.log = function(body) {
+			logs.push(body);
+		}
+		describe("test package",function(){
+			it("test 1", function() {
+				throw new Error("this is the error.");
+			})
+		}) // this is what we are testing
+		
+		expect(logs.length).to.equal(1);
+		var log = JSON.parse(logs[0]);
+		expect(log.errorLog.length).to.equal(1);
+		expect(log.testLog.length).to.equal(1);
+		console.log = temp;
+	}
 })
 
 

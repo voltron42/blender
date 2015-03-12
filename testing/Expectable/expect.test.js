@@ -3,7 +3,6 @@ var expectError = function(message, operation) {
 	try {
 		operation();
 	} catch(e) {
-		console.log(e);
 		error = e;
 	}
 	if (!error) {
@@ -64,6 +63,42 @@ tests.apply({
       expect(value).to.match("steve");
     });
   }
+},{
+	name:"expect exact",
+	fn:function() {
+		expect(5).to.be(5);
+		expect(5).to.not.be("5")
+		expect(5).to.equal("5")
+	}
+},{
+	name:"expect type",
+	fn:function() {
+		expect(5).to.be.a("number");
+		expect("").to.be.a("string");
+		expect().to.be.a("undefined");
+		expect([]).to.not.be.a("string");
+		expect(null).to.be.a("object");
+	}
+},{
+	name:"expect undefined",
+	fn:function() {
+		var value;
+		expect(value).to.be.undefined();
+		expect().to.be.undefined();
+		expect("").to.not.be.undefined();
+	}
+},{
+	name:"expect true",
+	fn:function() {
+		expect(2 < 5).to.be.true();
+		expect(2 == 6).to.not.be.true();
+		expect("steve").to.not.be.true();
+	}
+},{
+	name:"expect false",
+	fn:function() {
+		expect(2 == 6).to.be.false();
+	}
 })
 
 

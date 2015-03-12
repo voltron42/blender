@@ -83,11 +83,13 @@
       if (!(e instanceof Error)) {
         e = new Error(e);
       }
+	  var stack = e.stack.split("\n    ");
+	  var message = stack.shift();
       log.errorLog.push({
         path:path,
         error:{
-          message:e.message,
-          stack:e.stack,
+          message:message,
+          stack:stack,
           keys:Object.keys(e)
         }
       });

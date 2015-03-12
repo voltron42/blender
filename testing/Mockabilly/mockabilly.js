@@ -1,4 +1,5 @@
-module.exports = (function() {
+(function() {
+	var global = this;
 	var getArgsAsArray = function(args) {
 		var keys = Object.keys(args).filter(function(arg) {
 			return !isNaN(Number(arg));
@@ -312,5 +313,5 @@ module.exports = (function() {
 			uptick:uptick
 		}
 	}
-	return Mockabilly;
+	this.Mockabilly = Mockabilly;
 })();

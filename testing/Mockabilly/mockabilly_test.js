@@ -1,7 +1,4 @@
 describe("Mockabilly", function(){
-	var expect = require("chai").expect;
-	var Mockabilly = require("./mockabilly.js");
-
 	it("mockFunction will always return undefined", function() {
 		var mockFn = Mockabilly.mockFunction().build();
 
@@ -512,7 +509,7 @@ describe("Mockabilly", function(){
 
 		var joe = new MockPerson();
 
-		expect(joe).to.be.an.instanceof(Person);
+		expect(joe).to.be.anInstanceOf(Person);
 	});
 
 	it("mockConstructor tracks its instances and the calls that created them",function() {

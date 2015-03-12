@@ -12,20 +12,19 @@
 				try {
 					test.fn();
 				} catch (e) {
-					console.log(e)
 					error = e;
 				}
 				return [
 					"<li class=\"",
 					(error?"fail":"success"),
-					"\"><pre>",
+					"\">",
 					test.name,
 					(error?[
 						"<ul><li>",
 						error,
 						"</li></ul>",
 					].join(""):""),
-					"</pre></li>",
+					"</li>",
 				].join("");
 			}).join("");
 		}

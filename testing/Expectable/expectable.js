@@ -11,9 +11,6 @@
             return true;
         }
         if (typeof a !=  typeof b) {
-			console.log("type not match:");
-			console.log(a);
-			console.log(b);
             return false;
         }
         var type = typeof a;
@@ -27,17 +24,11 @@
         }
         if (aIsArray && bIsArray) {
             if (a.length != b.length) {
-			console.log("length does not match:");
-			console.log(a);
-			console.log(b);
                 return false;
             }
             var length = a;
             for (var x = 0; x < a; x++) {
                 if (!deepEqual(a[x], b[x])) {
-			console.log("elem not match:");
-			console.log(a[x]);
-			console.log(b[x]);
                     return false;
                 }
             }
@@ -47,10 +38,6 @@
 			aKeys.sort();
 			bKeys.sort();
 			if (!deepEqual(aKeys, bKeys)) {
-			console.log("keys not match:");
-			console.log(aKeys);
-			console.log(bKeys);
-				
 				return false
 			}
             var keys = Object.keys(a);
@@ -69,7 +56,6 @@
 			try {
 				operation();
 			} catch(e) {
-				console.log(e);
 				error = e;
 			}
 			if (!error) {
@@ -121,7 +107,7 @@
 	}
 	var raw = expecting.map(function(spec){
 		var obj = {};
-		eval("obj.fn = function("+spec.params+"){return "+spec.cond+"};")
+		eval("obj.fn = function(actual"+(spec.params.length > 0?",":"")+spec.params+"){return "+spec.cond+"};")
 		return {
 			path:spec.path,
 			msg:spec.msg,
@@ -151,8 +137,9 @@
 				temp = temp[step];
 			});
 			var fn = function() {
-				if (cond == spec.fn.apply(actual,arguments)) {
-					throw new Error(publish(spec[label],[].concat(actual,argsToArray(arguments))));;
+				var args = [].concat(actual,argsToArray(arguments))
+				if (cond === spec.fn.apply(null,args)) {
+					throw new Error(publish(spec[label],args));;
 				}
 			};
 			if (typeof temp[name] == 'object') {

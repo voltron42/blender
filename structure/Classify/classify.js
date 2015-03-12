@@ -1,4 +1,4 @@
-module.exports = (function(){
+(function(){
 	var fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 	var objectBuilder = function(baseClass, superClassInstance){
 		var out = function(args){
@@ -72,8 +72,8 @@ module.exports = (function(){
 			Object.keys(_super).forEach(override(me,_this,_super));
 		}
 	}
-	var classFactory = function(pkg) {
-		return function(className,constructor,statics,superClass,argumentConverter) {
+	var ClassFactory = function(pkg) {
+		this.build = function(className,constructor,statics,superClass,argumentConverter) {
 			if (typeof className != 'string') {
 				throw new Error("Class name must be a string!");
 			}
@@ -98,7 +98,7 @@ module.exports = (function(){
 			appendStatics(pkg[className], statics);
 		}
 	}
-	return function (root,namespace){
+	this.Classify = function (root,namespace){
 		var pkg = root||global||window;
 		namespace = namespace || "";
 		var names = namespace.split("/.");
@@ -108,6 +108,6 @@ module.exports = (function(){
 				pkg = pkg[name];
 			}
 		});
-		return classFactory(pkg);
+		return new ClassFactory(pkg);
 	};
 })()
