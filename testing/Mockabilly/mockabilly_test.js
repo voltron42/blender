@@ -7,11 +7,11 @@ describe("Mockabilly", function(){
 
 		var returnValue;
 		returnValue = mockFn();
-		expect(returnValue).to.be.undefined;
+		expect(returnValue).to.be.undefined();
 		returnValue = mockFn();
-		expect(returnValue).to.be.undefined;// no return chain
+		expect(returnValue).to.be.undefined();// no return chain
 		returnValue = mockFn();
-		expect(returnValue).to.be.undefined;
+		expect(returnValue).to.be.undefined();
 	})
 
 	it("mockFunction will always return true", function() {
@@ -19,11 +19,11 @@ describe("Mockabilly", function(){
 
 		var returnValue;
 		returnValue = mockFn();
-		expect(returnValue).to.be.true;
+		expect(returnValue).to.be.true();
 		returnValue = mockFn();
-		expect(returnValue).to.be.true;// return chain continues
+		expect(returnValue).to.be.true();// return chain continues
 		returnValue = mockFn();
-		expect(returnValue).to.be.true;
+		expect(returnValue).to.be.true();
 	})
 
 	it("mockFunction will always return false", function() {
@@ -31,11 +31,11 @@ describe("Mockabilly", function(){
 
 		var returnValue;
 		returnValue = mockFn();
-		expect(returnValue).to.be.false;
+		expect(returnValue).to.be.false();
 		returnValue = mockFn();
-		expect(returnValue).to.be.false;
+		expect(returnValue).to.be.false();
 		returnValue = mockFn();
-		expect(returnValue).to.be.false;
+		expect(returnValue).to.be.false();
 	})
 
 	it("mockFunction will alternate returning true and false", function() {
@@ -46,17 +46,17 @@ describe("Mockabilly", function(){
 
 		var returnValue;
 		returnValue = mockFn();
-		expect(returnValue).to.be.true;
+		expect(returnValue).to.be.true();
 
 		returnValue = mockFn();
-		expect(returnValue).to.be.false;
+		expect(returnValue).to.be.false();
 
 
 		returnValue = mockFn();
-		expect(returnValue).to.be.true;
+		expect(returnValue).to.be.true();
 
 		returnValue = mockFn();
-		expect(returnValue).to.be.false;
+		expect(returnValue).to.be.false();
 	})
 
 	it("mockFunction will always throw 'invalid'", function() {
@@ -69,14 +69,14 @@ describe("Mockabilly", function(){
 		} catch (err) {
 			expect(err).to.equal(error);
 		}
-		expect(returnValue).to.be.undefined;
+		expect(returnValue).to.be.undefined();
 
 		try {
 			returnValue = mockFn();
 		} catch (err) {
 			expect(err).to.equal(error);
 		}
-		expect(returnValue).to.be.undefined;
+		expect(returnValue).to.be.undefined();
 	})
 
 	it("mockFunction will always throw Error object", function() {
@@ -88,9 +88,9 @@ describe("Mockabilly", function(){
 		try {
 			returnValue = mockFn();
 		} catch (err) {
-			expect(err).to.deep.equal(error);
+			expect(err).to.deepEqual(error);
 		}
-		expect(returnValue).to.be.undefined;
+		expect(returnValue).to.be.undefined();
 	})
 
 	it("mockFunction will alternate throws and returns in prescribed pattern", function() {
@@ -107,39 +107,39 @@ describe("Mockabilly", function(){
 
 		var returnValue;
 		returnValue = mockFn();
-		expect(returnValue).to.be.equal(message1);
+		expect(returnValue).to.be(message1);
 		try {
 			returnValue = mockFn();
 		} catch (err) {
-			expect(err).to.deep.equal(error);
+			expect(err).to.deepEqual(error);
 		}
-		expect(returnValue).to.be.equal(message1);
+		expect(returnValue).to.be(message1);
 		returnValue = mockFn();
-		expect(returnValue).to.be.equal(message2);
+		expect(returnValue).to.be(message2);
 		try {
 			returnValue = mockFn();
 		} catch (err) {
-			expect(err).to.deep.equal(errorMessage);
+			expect(err).to.deepEqual(errorMessage);
 		}
-		expect(returnValue).to.be.equal(message2);
+		expect(returnValue).to.be(message2);
 
 		// chain repeats
 		returnValue = mockFn();
-		expect(returnValue).to.be.equal(message1);
+		expect(returnValue).to.be(message1);
 		try {
 			returnValue = mockFn();
 		} catch (err) {
-			expect(err).to.deep.equal(error);
+			expect(err).to.deepEqual(error);
 		}
-		expect(returnValue).to.be.equal(message1);
+		expect(returnValue).to.be(message1);
 		returnValue = mockFn();
-		expect(returnValue).to.be.equal(message2);
+		expect(returnValue).to.be(message2);
 		try {
 			returnValue = mockFn();
 		} catch (err) {
-			expect(err).to.deep.equal(errorMessage);
+			expect(err).to.deepEqual(errorMessage);
 		}
-		expect(returnValue).to.be.equal(message2);
+		expect(returnValue).to.be(message2);
 
 	})
 
@@ -232,7 +232,7 @@ describe("Mockabilly", function(){
 		mockFn("Hermes");
 		call = mockFn.meter.getLastCall();
 		expect(call.getParameter('firstName')).to.equal("Hermes");
-		expect(call.getParameter('lastName')).to.be.undefined;
+		expect(call.getParameter('lastName')).to.be.undefined();
 	})
 
 	it("mockFunction can validate parameter type",function() {
@@ -247,29 +247,29 @@ describe("Mockabilly", function(){
 		mockFn("Malcolm","Reynolds",new Date(2475,3,2));
 		call = mockFn.meter.getLastCall();
 		expect(call.getParameter('firstName')).to.equal("Malcolm");
-		expect(call.isParameterTypeValid('firstName')).to.be.true;
+		expect(call.isParameterTypeValid('firstName')).to.be.true();
 		expect(call.getParameter('lastName')).to.equal("Reynolds");
-		expect(call.isParameterTypeValid('lastName')).to.be.true;
-		expect(call.getParameter('dateOfBirth')).to.deep.equal(new Date(2475,3,2));
-		expect(call.isParameterTypeValid('dateOfBirth')).to.be.true;
+		expect(call.isParameterTypeValid('lastName')).to.be.true();
+		expect(call.getParameter('dateOfBirth')).to.deepEqual(new Date(2475,3,2));
+		expect(call.isParameterTypeValid('dateOfBirth')).to.be.true();
 
 		mockFn("Richard","Castle","1968/5/17");
 		call = mockFn.meter.getLastCall();
 		expect(call.getParameter('firstName')).to.equal("Richard");
-		expect(call.isParameterTypeValid('firstName')).to.be.true;
+		expect(call.isParameterTypeValid('firstName')).to.be.true();
 		expect(call.getParameter('lastName')).to.equal("Castle");
-		expect(call.isParameterTypeValid('lastName')).to.be.true;
-		expect(call.getParameter('dateOfBirth')).to.deep.equal("1968/5/17");
-		expect(call.isParameterTypeValid('dateOfBirth')).to.be.false; // string date is not a Date instance
+		expect(call.isParameterTypeValid('lastName')).to.be.true();
+		expect(call.getParameter('dateOfBirth')).to.deepEqual("1968/5/17");
+		expect(call.isParameterTypeValid('dateOfBirth')).to.be.false(); // string date is not a Date instance
 
 		mockFn("Hermes",null,new Date(-300,1,1));
 		call = mockFn.meter.getLastCall();
 		expect(call.getParameter('firstName')).to.equal("Hermes");
-		expect(call.isParameterTypeValid('firstName')).to.be.true;
+		expect(call.isParameterTypeValid('firstName')).to.be.true();
 		expect(call.getParameter('lastName')).to.be.null;
-		expect(call.isParameterTypeValid('lastName')).to.be.false; // null is not a string
-		expect(call.getParameter('dateOfBirth')).to.deep.equal(new Date(-300,1,1));
-		expect(call.isParameterTypeValid('dateOfBirth')).to.be.true;
+		expect(call.isParameterTypeValid('lastName')).to.be.false(); // null is not a string
+		expect(call.getParameter('dateOfBirth')).to.deepEqual(new Date(-300,1,1));
+		expect(call.isParameterTypeValid('dateOfBirth')).to.be.true();
 	})
 
 	it("mockFunction can track var args",function() {
@@ -366,7 +366,7 @@ describe("Mockabilly", function(){
 		setNameCall = personMock.setName.meter.getLastCall();
 		expect(setNameCall.getParameter("name")).to.equal("Walter");
 		name = personMock.getName();
-		expect(name).to.be.undefined;
+		expect(name).to.be.undefined();
 
 		personMock.setName("Joshua");
 		setNameCall = personMock.setName.meter.getLastCall();
@@ -388,7 +388,7 @@ describe("Mockabilly", function(){
 		mocker.mockFn('getDateOfBirth').thenReturn(new Date(1978,5,17));
 		mocker.build(joe);
 
-		expect(joe.getDateOfBirth()).to.deep.equal(new Date(1978,5,17));
+		expect(joe.getDateOfBirth()).to.deepEqual(new Date(1978,5,17));
 	});
 
 	it("instance can add mock functions to an existing function",function() {
