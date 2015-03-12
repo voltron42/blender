@@ -189,8 +189,8 @@ var expecting = [{
 },
 {
 	"path": "contain",
-	"msg": "Substring is not present in value:\n\tValue: $$$,\n\tSubstring: $$$",
-	"not": "Substring is present in value:\n\tValue: $$$,\n\tSubstring: $$$",
+	"msg": "Substring is not present in value:\n\tValue: $0$,\n\tSubstring: $1$",
+	"not": "Substring is present in value:\n\tValue: $0$,\n\tSubstring: $1$",
 	"params": "needle",
 	"cond": "this.indexOf(needle) >= 0"
 }];
