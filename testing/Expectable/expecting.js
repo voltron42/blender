@@ -1,91 +1,91 @@
 var expecting = [{
 	"path": "equal",
-	"msg": "Values are not equal:\n\tActual: $$$,\n\tExpected: $$$",
-	"not": "Values are equal:\n\tActual: $$$,\n\tExpected: $$$",
+	"msg": "Values are not equal:\n\tActual: $0$,\n\tExpected: $1$",
+	"not": "Values are equal:\n\tActual: $0$,\n\tExpected: $1$",
 	"params": "expected",
 	"cond": "this == expected"
 },
 {
 	"path": "deepEqual",
-	"msg": "Values are not equal:\n\tActual: $$$,\n\tExpected: $$$",
-	"not": "Values are equal:\n\tActual: $$$,\n\tExpected: $$$",
+	"msg": "Values are not equal:\n\tActual: $0$,\n\tExpected: $1$",
+	"not": "Values are equal:\n\tActual: $0$,\n\tExpected: $1$",
 	"params": "expected",
 	"cond": "deep.eq(this,expected)"
 },
 {
 	"path": "exist",
 	"msg": "Value does not exist!",
-	"not": "Value exists:\n\tValue:$$$",
+	"not": "Value exists:\n\tValue:$0$",
 	"params": "",
 	"cond": "this != undefined && this != null && this != global()"
 },
 {
 	"path": "match",
-	"msg": "",
-	"not": "",
+	"msg": "Value does not match pattern:\n\tValue: $0$,\n\tPattern: $1$",
+	"not": "Value matches pattern:\n\tValue: $0$,\n\tPattern: $1$",
 	"params": "regex",
 	"cond": "new RegExp(regex).test(this)"
 },
 {
 	"path": "be",
-	"msg": "",
-	"not": "",
+	"msg": "Values are not strictly equal:\n\tActual: $0$,\n\tExpected: $1$",
+	"not": "Values are strictly equal:\n\tActual: $0$,\n\tExpected: $1$",
 	"params": "expected",
 	"cond": "this === expected"
 },
 {
 	"path": "be.a",
-	"msg": "",
-	"not": "",
+	"msg": "Values does not match type:\n\tValue: $0$,\n\tType: $1$",
+	"not": "Values matches type:\n\tValue: $0$,\n\tType: $1$",
 	"params": "type",
 	"cond": "typeof this == type"
 },
 {
 	"path": "be.anInstanceOf",
-	"msg": "",
-	"not": "",
+	"msg": "Values is not an instance of constructor",
+	"msg": "Values is an instance of constructor",
 	"params": "constructor",
 	"cond": "this instanceof constructor"
 },
 {
 	"path": "be.undefined:",
-	"msg": "",
-	"not": "",
+	"msg": "Value is not undefined:\n\tValue:$0$",
+	"not": "Value is undefined!",
 	"params": "",
-	"cond": "typeof this == 'undefined'"
+	"cond": "typeof this == 'undefined' && this != global()"
 },
 {
 	"path": "be.null",
-	"msg": "",
-	"not": "",
+	"msg": "Value is not null:\n\tValue:$0$",
+	"not": "Value is null!",
 	"params": "",
 	"cond": "this == null"
 },
 {
 	"path": "be.ok",
-	"msg": "",
-	"not": "",
+	"msg": "Value is not truthy:\n\tValue:$0$",
+	"not": "Value is truthy:\n\tValue:$0$",
 	"params": "",
 	"cond": "this?true:false"
 },
 {
 	"path": "be.empty",
-	"msg": "",
-	"not": "",
+	"msg": "Value is not empty:\n\tValue:$0$",
+	"not": "Value is empty:\n\tValue:$0$",
 	"params": "",
 	"cond": "(((this instanceof Array) || typeof this == 'string')&& this.length == 0) || (typeof this == 'object' && Object.keys(this).length == 0)"
 },
 {
 	"path": "be.true",
-	"msg": "",
-	"not": "",
+	"msg": "Value is not true:\n\tValue:$0$",
+	"not": "Value is true:\n\tValue:$0$",
 	"params": "",
 	"cond": "this === true"
 },
 {
 	"path": "be.false",
-	"msg": "",
-	"not": "",
+	"msg": "Value is not false:\n\tValue:$0$",
+	"not": "Value is false:\n\tValue:$0$",
 	"params": "",
 	"cond": "this === false"
 },
