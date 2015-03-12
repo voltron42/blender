@@ -22,3 +22,5 @@ tests.apply({
 		console.log = temp;
 	}
 })
+
+
