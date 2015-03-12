@@ -137,18 +137,9 @@
         return out;
     }
     var publish = function(message,vars) {
-        var fields = message.split("$$$");
-        var length = Math.max(fields.length, vars.length);
-        var out = [];
-        for (var x = 0; x < length; x++) {
-            if (fields[x]) {
-                out.push(fields[x]);
-            }
-            if (vars[x]) {
-                out.push(vars[x]);
-            }
-        }
-        return out.join("");
+        return message.replace(/\$[0-9]+\$/g,function(match){
+            return vars[match.split("$").join("")];
+        })
     }
 	var build = function(root,label,cond,actual) {
 		return function(spec) {
