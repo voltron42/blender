@@ -21,8 +21,8 @@ var expecting = [{
 },
 {
 	"path": "match",
-	"msg": "Values does not match pattern:\n\tValue: $0$,\n\tPattern: $1$",
-	"not": "Values matches pattern:\n\tValue: $0$,\n\tPattern: $1$",
+	"msg": "Value does not match pattern:\n\tValue: $0$,\n\tPattern: $1$",
+	"not": "Value matches pattern:\n\tValue: $0$,\n\tPattern: $1$",
 	"params": "regex",
 	"cond": "new RegExp(regex).test(this)"
 },

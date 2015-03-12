@@ -57,10 +57,10 @@ tests.apply({
     var value = 1875;
     expect(value).to.match("[0-9]{4}");
     expect(value).to.not.match("steve");
-    expectError("",function(){
+    expectError("Value matches pattern:\n\tValue: 1875,\n\tPattern: [0-9]{4}",function(){
       expect(value).to.not.match("[0-9]{4}");
     });
-    expectError("",function(){
+    expectError("Value does not match pattern:\n\tValue: 1875,\n\tPattern: steve",function(){
       expect(value).to.match("steve");
     });
   }
