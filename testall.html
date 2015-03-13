@@ -18,13 +18,13 @@
 		<script src="./testing/Expectable/expect.test.js"></script>
 		<script src="./testing/Suitener/suitener.js"></script>
 		<script src="./testing/Suitener/suitener.test.js"></script>
+		<script src="./runtest.js"></script>
 		<script>
+			var runner;
 			(function(){
-				this.temp = console.log;
-				this.logs = [];
-				console.log = function(body) {
-					logs.push(body);
-				}
+				runner = new TestRunner();
+				runner.init();
+				tests.run();
 			})()
 		</script>
 		<script src="./testing/Mockabilly/mockabilly.js"></script>
@@ -37,40 +37,8 @@
 		<script src="./structure/Registry/registry.test.js"></script>
 		<script>
 			(function(){
-				console.log = temp;
-				var publish = function(log) {
-					log = JSON.parse(log);
-					var errorMap = {};
-					log.errorLog.forEach(function(error){
-						errorMap[error.path.join(" - ")] = error.error;
-					})
-					return log.testLog.map(function(test) {
-						var path = test.join(" - ");
-						if (path in errorMap) {
-							var error = errorMap[path];
-							var stack = [];
-							if (error.stack) {
-								stack = "<ul>" + error.stack.map(function(step) {
-									return "<li>" + step + "</li>";
-								}).join("") + "</ul>";
-							}
-							return [].concat([
-							"<li class=\"fail\">",
-								path,
-								"<ul><li>",
-								error.message,
-								],stack,[
-								"</li></ul>",
-							"</li>"
-							]).join("");
-						} else {
-							return "<li class=\"success\">" +path+ "</li>";
-						}
-					}).join("");
-				}
 				this.runAllTests = function() {
-					tests.run();
-					document.getElementById("output").innerHTML += logs.map(publish).join("");
+					document.getElementById("output").innerHTML = runner.showTests();
 				}
 			})()
 		</script>

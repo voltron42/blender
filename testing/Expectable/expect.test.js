@@ -13,7 +13,7 @@ var expectError = function(message, operation) {
 	}
 }
 tests.apply({
-	name:"expect equals",
+	name:["expect","equals"],
 	fn:function() {
 		var a = 5;
 		expect(a).to.equal(5);
@@ -26,7 +26,7 @@ tests.apply({
 		})
 	}
 },{
-	name:"expect deep equal",
+	name:["expect","deep equal"],
 	fn:function() {
 		var a = {
 			a:1,
@@ -42,7 +42,7 @@ tests.apply({
 		
 	}
 },{
-	name:"expect exist",
+	name:["expect", "exist"],
 	fn:function(){
 		var obj = 5;
 		expect(obj).to.exist();
@@ -51,27 +51,27 @@ tests.apply({
 		expectError("Value exists:\n\tValue:5",expect(obj).to.not.exist);
 	}
 },{
-  name:"expect match",
+  name:["expect", "match"],
   fn:function(){
     var value = 1875;
     expect(value).to.match("[0-9]{4}");
     expect(value).to.not.match("steve");
-    expectError("Value matches pattern:\n\tValue: 1875,\n\tPattern: [0-9]{4}",function(){
+    expectError("Value matches pattern:\n\tValue: 1875,\n\tPattern: \"[0-9]{4}\"",function(){
       expect(value).to.not.match("[0-9]{4}");
     });
-    expectError("Value does not match pattern:\n\tValue: 1875,\n\tPattern: steve",function(){
+    expectError("Value does not match pattern:\n\tValue: 1875,\n\tPattern: \"steve\"",function(){
       expect(value).to.match("steve");
     });
   }
 },{
-	name:"expect exact",
+	name:["expect", "exact"],
 	fn:function() {
 		expect(5).to.be(5);
 		expect(5).to.not.be("5")
 		expect(5).to.equal("5")
 	}
 },{
-	name:"expect type",
+	name:["expect", "type"],
 	fn:function() {
 		expect(5).to.be.a("number");
 		expect("").to.be.a("string");
@@ -80,7 +80,7 @@ tests.apply({
 		expect(null).to.be.a("object");
 	}
 },{
-	name:"expect undefined",
+	name:["expect", "undefined"],
 	fn:function() {
 		var value;
 		expect(value).to.be.undefined();
@@ -88,14 +88,14 @@ tests.apply({
 		expect("").to.not.be.undefined();
 	}
 },{
-	name:"expect true",
+	name:["expect", "true"],
 	fn:function() {
 		expect(2 < 5).to.be.true();
 		expect(2 == 6).to.not.be.true();
 		expect("steve").to.not.be.true();
 	}
 },{
-	name:"expect false",
+	name:["expect", "false"],
 	fn:function() {
 		expect(2 == 6).to.be.false();
 	}

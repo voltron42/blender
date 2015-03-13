@@ -89,8 +89,7 @@
         path:path,
         error:{
           message:message,
-          stack:stack,
-          keys:Object.keys(e)
+          stack:stack
         }
       });
     }
@@ -104,7 +103,7 @@
       fails:fails,
       success:success
     };
-    console.log(JSON.stringify(log));
+    logger.log(JSON.stringify(log));
   }
   top.describe = function(name, fn) {
     var test = new TestScope([]);

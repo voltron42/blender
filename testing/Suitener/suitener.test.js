@@ -1,9 +1,9 @@
 tests.apply({
-	name:"suitener describe executes",
+	name:["suitener","describe executes"],
 	fn:function() {
-		var temp = console.log;
+		var temp = logger.log;
 		var logs = [];
-		console.log = function(body) {
+		logger.log = function(body) {
 			logs.push(body);
 		}
 		describe("test package",function(){}) // this is what we are testing
@@ -19,14 +19,14 @@ tests.apply({
 			}
 		});
 		
-		console.log = temp;
+		logger.log = temp;
 	}
 },{
-	name:"suitener test fails",
+	name:["suitener","test fails"],
 	fn:function() {
-		var temp = console.log;
+		var temp = logger.log;
 		var logs = [];
-		console.log = function(body) {
+		logger.log = function(body) {
 			logs.push(body);
 		}
 		describe("test package",function(){
@@ -39,7 +39,7 @@ tests.apply({
 		var log = JSON.parse(logs[0]);
 		expect(log.errorLog.length).to.equal(1);
 		expect(log.testLog.length).to.equal(1);
-		console.log = temp;
+		logger.log = temp;
 	}
 })
 

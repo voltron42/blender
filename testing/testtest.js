@@ -6,27 +6,31 @@
 				allTests.push(arguments[x]);
 			}
 		}
+		var build = function(err) {
+			var stack = err.stack.split("\n    ");
+			var out = {
+				message:stack.shift(),
+				stack:stack
+			};
+			return out;
+		}
 		this.run = function() {
-			document.getElementById("output").innerHTML = allTests.map(function(test){
-				var error;
+			var log = {
+				testLog:[],
+				errorLog:[]
+			}
+			allTests.forEach(function(test){
+				log.testLog.push(test.name);
 				try {
 					test.fn();
 				} catch (e) {
-					error = e;
+					log.errorLog.push({
+						path:test.name,
+						error:build(e)
+					})
 				}
-				return [
-					"<li class=\"",
-					(error?"fail":"success"),
-					"\">",
-					test.name,
-					(error?[
-						"<ul><li>",
-						error,
-						"</li></ul>",
-					].join(""):""),
-					"</li>",
-				].join("");
-			}).join("");
+			})
+			logger.log(JSON.stringify(log));
 		}
 	}
 	this.tests = new Tester();

@@ -1,5 +1,5 @@
 describe("Object prototype extentions",function(){
-    describe("apply function",function(){
+    describe("apply",function(){
         it("exclusive",function(){
             var obj = {a:1};
             obj.apply({b:2});
@@ -25,11 +25,12 @@ describe("Object prototype extentions",function(){
             expect(obj.a).to.equal(1);
         });
         it("deep",function(){
-            var obj = {a:[]};
+            var obj = {a:[],b:{c:1}};
             var copy = obj.copy();
-            expect(copy).to.deepEqual({a:[]});
+            expect(copy).to.deepEqual({a:[],b:{c:1}});
             copy.a.push(5);
-            expect(obj.a).to.have.length(1);
+            copy.a.push(4);
+            expect(obj.a.length).to.equal(2);
         });
     });
 });

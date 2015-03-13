@@ -112,78 +112,71 @@ var expecting = [{
 },
 {
 	"path": "have.any",
-	"msg": "",
-	"not": "",
+	"msg": "Array does not contain any of the given values:\n\tArray:$0$\n\tValues$1$",
+	"not": "Array contains some of the given values:\n\tArray:$0$\n\tValues$1$",
 	"params": "values",
 	"cond": "contains.any(actual, values)"
 },
 {
 	"path": "have.any.keys",
-	"msg": "",
-	"not": "",
+	"msg": "The object does not contain any of the given keys:\n\tObject:$0$\n\tKeys$1$",
+	"not": "The object contains some of the given keys:\n\tObject:$0$\n\tKeys$1$",
 	"params": "keys",
 	"cond": "contains.any(Object.keys(actual), keys)"
 },
 {
 	"path": "have.all",
-	"msg": "",
-	"not": "",
+	"msg": "Array does not contain all of the given values:\n\tArray:$0$\n\tValues$1$",
+	"not": "Array contains all of the given values:\n\tArray:$0$\n\tValues$1$",
 	"params": "values",
 	"cond": "contains.all(actual, values)"
 },
 {
 	"path": "have.all.keys",
-	"msg": "",
-	"not": "",
+	"msg": "The object does not contain all of the given keys:\n\tObject:$0$\n\tKeys$1$",
+	"not": "The object contains all of the given keys:\n\tObject:$0$\n\tKeys$1$",
 	"params": "keys",
 	"cond": "contains.all(Object.keys(actual), keys)"
 },
 {
 	"path": "have.length",
-	"msg": "",
-	"not": "",
+	"msg": "Array length does not equal bound:\n\tArray:$0$\n\tBound:$1$",
+	"not": "Array length equals bound:\n\tArray:$0$\n\tBound:$1$",
 	"params": "bound",
 	"cond": "actual.length == bound"
 },
 {
 	"path": "have.length.lessThan",
-	"msg": "",
-	"not": "",
+	"msg": "Array length is not less than bound:\n\tArray:$0$\n\tBound:$1$",
+	"not": "Array length is less than bound:\n\tArray:$0$\n\tBound:$1$",
 	"params": "bound",
 	"cond": "actual.length < bound"
 },
 {
 	"path": "have.length.greaterThan",
-	"msg": "",
-	"not": "",
+	"msg": "Array length is not greater than bound:\n\tArray:$0$\n\tBound:$1$",
+	"not": "Array length is greater than bound:\n\tArray:$0$\n\tBound:$1$",
 	"params": "bound",
 	"cond": "actual.length > bound"
 },
 {
 	"path": "have.length.within",
-	"msg": "",
-	"not": "",
+	"msg": "Array length is not within bounds:\n\tValue:$0$\n\tLow Bound:$1$\n\tHigh Bound:$2$",
+	"not": "Array length is within bounds:\n\tValue:$0$\n\tLow Bound:$1$\n\tHigh Bound:$2$",
 	"params": "low, high",
 	"cond": "actual.length <= high && actual.length >= low"
 },
 {
 	"path": "have.property",
-	"msg": "",
-	"not": "",
+	"msg": "Property does not equal given value:\n\tObject:$0$\n\tKey:$1$\n\tValue:$2$",
+	"not": "Property equals given value:\n\tObject:$0$\n\tKey:$1$\n\tValue:$2$",
 	"params": "key, value",
 	"cond": "actual[key] == value"
 },
 {
-	"path": "have.ownProperty",
-	"msg": "",
-	"not": "",
-	"params": "key",
-	"cond": "key in actual"
-},
-{
 	"path": "have.deepProperty",
-	"msg": "",
-	"not": "",
+	"msg": "Property does not equal given value:\n\tObject:$0$\n\tKey:$1$\n\tValue:$2$",
+	"not": "Property equals given value:\n\tObject:$0$\n\tKey:$1$\n\tValue:$2$",
 	"params": "key, value",
 	"cond": "deep.prop(actual,key,value)"
 },

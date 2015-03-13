@@ -124,7 +124,11 @@
     }
     var publish = function(message,vars) {
         return message.replace(/\$[0-9]+\$/g,function(match){
-            return vars[match.split("$").join("")];
+			var key = match.split("$").join("");
+			if (!(key in vars)) {
+				return "";
+			}
+            return JSON.stringify(vars[key]);
         })
     }
 	var build = function(root,label,cond,actual) {
