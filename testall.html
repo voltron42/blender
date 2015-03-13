@@ -26,6 +26,8 @@
 					logs.push(body);
 				}
 			})()
+			var err;
+			try {
 		</script>
 		<script src="./testing/Mockabilly/mockabilly.js"></script>
 		<script src="./testing/Mockabilly/mockabilly_test.js"></script>
@@ -36,6 +38,9 @@
 		<script src="./structure/Registry/registry.js"></script>
 		<script src="./structure/Registry/registry.test.js"></script>
 		<script>
+		} catch (e) {
+		err = e;
+		}
 			(function(){
 				console.log = temp;
 				var publish = function(log) {
@@ -71,12 +76,16 @@
 				this.runAllTests = function() {
 					tests.run();
 					document.getElementById("output").innerHTML += logs.map(publish).join("");
+					document.getElementById("err").innerHTML = JSON.stringify(err);
 				}
 			})()
 		</script>
 	</head>
 	<body onload="runAllTests()">
+	<div id="err" class="fail"></div>
 		<pre><ul id="output">
 		</ul></pre>
 	</body>
 </html>
+
+
