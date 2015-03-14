@@ -14,9 +14,10 @@
             return false;
         }
         var type = typeof a;
-        if (type == "function") {
-            return true;
+        if (type != "object") {
+            return false;
         }
+        alert("type = " + type);
         var aIsArray = a instanceof Array;
         var bIsArray = b instanceof Array;
         if ((aIsArray && !bIsArray) || (!aIsArray && bIsArray)) {
@@ -141,9 +142,10 @@
 				temp = temp[step];
 			});
 			var fn = function() {
-				var args = [].concat(actual,argsToArray(arguments))
+				var args = argsToArray(arguments);
+				args.unshift(actual);
 				if (cond === spec.fn.apply(null,args)) {
-					throw new Error(publish(spec[label],args));;
+					throw new Error(publish(spec[label],args));
 				}
 			};
 			if (typeof temp[name] == 'object') {

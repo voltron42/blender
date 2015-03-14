@@ -20,7 +20,7 @@ describe("Object prototype extentions",function(){
         it("shallow", function(){
             var obj = {a:1};
             var copy = obj.copy();
-            expect(copy).to.deepEqual({a:2});
+            expect(copy).to.deepEqual({a:1});
             copy.a = 2;
             expect(obj.a).to.equal(1);
         });
@@ -30,7 +30,7 @@ describe("Object prototype extentions",function(){
             expect(copy).to.deepEqual({a:[],b:{c:1}});
             copy.a.push(5);
             copy.a.push(4);
-            expect(obj.a.length).to.equal(2);
+            expect(obj.a).to.have.length(2);
         });
     });
 });
