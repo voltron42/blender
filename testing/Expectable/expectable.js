@@ -17,7 +17,6 @@
         if (type != "object") {
             return false;
         }
-        alert("type = " + type);
         var aIsArray = a instanceof Array;
         var bIsArray = b instanceof Array;
         if ((aIsArray && !bIsArray) || (!aIsArray && bIsArray)) {
@@ -123,15 +122,6 @@
         }
         return out;
     }
-    var publish = function(message,vars) {
-        return message.replace(/\$[0-9]+\$/g,function(match){
-			var key = match.split("$").join("");
-			if (!(key in vars)) {
-				return "";
-			}
-            return JSON.stringify(vars[key]);
-        })
-    }
 	var build = function(root,label,cond,actual) {
 		return function(spec) {
 			var path = spec.path.split(".");
@@ -145,7 +135,7 @@
 				var args = argsToArray(arguments);
 				args.unshift(actual);
 				if (cond === spec.fn.apply(null,args)) {
-					throw new Error(publish(spec[label],args));
+					throw new Error(Mint.format.apply(null,[].concat(spec[label],args)));
 				}
 			};
 			if (typeof temp[name] == 'object') {
