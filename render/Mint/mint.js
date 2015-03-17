@@ -25,20 +25,20 @@
 		return tokens;
 	}
 	var Parser = function(template) {
-		var tokens = parse(template);
-		//console.log(tokens);
+		this.tokens = parse(template);
 		var index = 0;
 		this.hasNext = function() {
-			return index < tokens.length;
+			return index < this.tokens.length;
 		}
 		this.next = function() {
-			return tokens[index++];
+			return this.tokens[index++];
 		}
 		this.length = function() {
-			return tokens.length;
+			return this.tokens.length;
 		}
 	}
 	var CompositeTemplate = function(list) {
+  	this.list = list;
 		this.apply = function(data) {
 			return list.map(function(template) {
 				return template.apply(data);
@@ -46,32 +46,33 @@
 		}
 	}
 	var ExpressionTemplate = function(token) {
-		var expression = token.substring(2,token.length-1);
+		this.expression = token.substring(2,token.length-1);
 		var fn;
-		eval("fn = function(_$, _index, _parent) {return _$."+expression+";}");
+		eval("fn = function(_$, _index, _parent) {return _$."+this.expression+";}");
 		this.apply = fn;
 	}
 	var StringTemplate = function(strval) {
+  	this.value = strval
 		this.apply = function() {
 			return strval;
 		}
 	}
 	var ConditionalTemplate = function(token, parser) {
-		var exp = new ExpressionTemplate(token);
-		var list = buildFromList(parser);
+		this.exp = new ExpressionTemplate(token);
+		this.list = buildFromList(parser);
 		this.apply = function(data,index,parent) {
-			if (exp.apply(data,index,parent)) {
-				return list.apply(data,index,parent);
+			if (this.exp.apply(data,index,parent)) {
+				return this.list.apply(data,index,parent);
 			} else {
 				return "";
 			}
 		}
 	}
 	var LoopTemplate = function(token, parser) {
-		var exp = new ExpressionTemplate(token);
-		var list = buildFromList(parser);
+		this.exp = new ExpressionTemplate(token);
+		this.list = buildFromList(parser);
 		this.apply = function(data,index,parent) {
-			var collection = exp.apply(data,index,parent);
+			var collection = this.exp.apply(data,index,parent);
 			if (typeof collection == "object") {
 				var _parent = {
 					data:data
@@ -81,11 +82,11 @@
 				}
 				if (collection instanceof Array) {
 					return collection.map(function(child, index) {
-						return list.apply(child, index, _parent);
+						return this.list.apply(child, index, _parent);
 					}).join("");
 				} else {
 					return Object.keys(collection).map(function(key) {
-						return list.apply(collection[key], key, _parent);
+						return this.list.apply(collection[key], key, _parent);
 					}).join("");
 				}
 			} else {
@@ -123,7 +124,6 @@
 			}
 			list.push(single);
 		}
-		console.log(list);
 		return new CompositeTemplate(list);
 	}
 	var buildFrom = function(parser) {
@@ -139,8 +139,15 @@
 			return new StringTemplate("");
 		}
 	}
-	var compileTemplate = function(template) {
-		return buildFrom(new Parser(template));
+	var compileTemplate = function(tplstr) {
+  	console.log("compiling");
+  	console.log(tplstr);
+  	var parser = new Parser(tplstr);
+  	console.log(parser);
+  	var template = buildFrom(parser);
+  	console.log(template);
+  	console.log("");
+		return template;
 	}
 	this.Mint = this.Mint || {};
 	this.Mint.compile = compileTemplate;
