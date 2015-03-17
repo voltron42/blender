@@ -29,14 +29,27 @@ describe("Mint template", function(){
 		expect(tpl.apply({poop:false})).to.equal("I like sandwiches.");
 		expect(tpl.apply({poop:true})).to.equal("I like poop sandwiches.");
 	});
-	it("list", function() {
-		console.log("list");
+	it("object list", function() {
 		var str = "Tonight's lottery numbers are $!numbers$$=value$, $$$and the powerball is $=powerball$.";
 		var tpl = Mint.compile(str);
 		var data = {numbers:[{value:5},{value:7},{value:12},{value:17},{value:25},{value:28}],powerball:16};
 		var expected = "Tonight's lottery numbers are 5, 7, 12, 17, 25, 28, and the powerball is 16.";
 		expect(tpl.apply(data)).to.equal(expected);
-	})
+	});
+	it("primitive list", function() {
+		var str = "Tonight's lottery numbers are $!numbers$$=_parent.data.numbers[_index]$, $$$and the powerball is $=powerball$.";
+		var tpl = Mint.compile(str);
+		var data = {numbers:[5,7,12,17,25,28],powerball:16};
+		var expected = "Tonight's lottery numbers are 5, 7, 12, 17, 25, 28, and the powerball is 16.";
+		expect(tpl.apply(data)).to.equal(expected);
+	});
+	it("map", function() {
+		var str = "Stats: $!stats$$=_index$ := $=_parent.data.stats[_index]$; $$$";
+		var tpl = Mint.compile(str);
+		var data = {stats:{x:5,y:8,h:20,w:13}};
+		var expected = "Stats: x := 5; y := 8; h := 20; w := 13; ";
+		expect(tpl.apply(data)).to.equal(expected);
+	});
 });
 
 
