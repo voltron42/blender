@@ -24,6 +24,11 @@ describe("Mint template", function(){
 		expect(tpl.apply({name:{first:"Steve",last:"Rogers"}})).to.equal("Steve Rogers will be indexed as \"Rogers, Steve\".");
 		expect(tpl.apply({name:{first:"Bruce",last:"Wayne"}})).to.equal("Bruce Wayne will be indexed as \"Wayne, Bruce\".");
 	});
+	it("conditional",function() {
+		var tpl = Mint.compile("I like $?poop$poop $$$sandwiches.");
+		expect(tpl.apply({poop:false})).to.equal("I like sandwiches.");
+		expect(tpl.apply({poop:true})).to.equal("I like poop sandwiches.");
+	});
 	it("list", function() {
 		console.log("list");
 		var str = "Tonight's lottery numbers are $!numbers$$=value$, $$$and the powerball is $=powerball$.";
@@ -33,3 +38,6 @@ describe("Mint template", function(){
 		expect(tpl.apply(data)).to.equal(expected);
 	})
 });
+
+
+
