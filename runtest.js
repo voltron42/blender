@@ -2,11 +2,17 @@
 	var publish = function(log) {
 		log = JSON.parse(log);
 		var errorMap = {};
+		log.testLog = log.testLog.map(function(test) {
+			return test.join(" - ")
+		});
 		log.errorLog.forEach(function(error){
-			errorMap[error.path.join(" - ")] = error.error;
-		})
-		return log.testLog.map(function(test) {
-			var path = test.join(" - ");
+			var path = error.path.join(" - ");
+			if (log.testLog.indexOf(path) < 0) {
+				log.testLog.push(path);
+			}
+			errorMap[path] = error.error;
+		});
+		return log.testLog.map(function(path) {
 			if (path in errorMap) {
 				var error = errorMap[path];
 				var stack = [];

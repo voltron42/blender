@@ -26,6 +26,18 @@
       top[label] = temp[label];
     });
   }
+  var mapFnList = function(fn,index) {
+		var out = {i:index};
+		try{
+			fn();
+		}catch(e){
+			out.e = e;
+		}
+		return out;
+  }
+  var filterFnList = function(result) {
+	  return result.e
+  }
   var TestScope = function(path) {
     var prereqs = [];
     var postreqs = [];
@@ -44,9 +56,10 @@
     }
     this.describe = function(name, fn) {
       try {
-        prereqs.forEach(function(fn) {
-          fn();
-        })
+        var prereqResults = prereqs.map(mapFnList).filter(filterFnList);
+		if (prereqResults.length > 0) {
+			
+		}
         var child = new TestScope(path.concat(name));
         var temp = setGlobal(child);
         try {
@@ -107,8 +120,21 @@
   }
   top.describe = function(name, fn) {
     var test = new TestScope([]);
-    test.describe(name, fn);
-    printResults(test.getLogs());
+	try {
+		test.describe(name, fn);
+		printResults(test.getLogs());
+	} catch(e) {
+		printResults({
+			testLog:[name],
+			errorLog:[{
+				path:[name],
+				error:{
+					message:e.message,
+					stack:e.stack
+				}
+			}]
+		});
+	}
   }
 })()
 

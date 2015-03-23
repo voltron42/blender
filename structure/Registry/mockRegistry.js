@@ -8,11 +8,16 @@
 		}
 	}
 	var invoke = function(name,depObj) {
-		depObj = depObj || {}
+		depObj = depObj || {};
+		if (!(name in register)) {
+			throw new Error(name + " invalid service name");
+		}
 		var service = register[name];
-		return service.init(service.deps.map(function(dep) {
+		var fullDeps = service.deps.map(function(dep) {
 			return depObj[dep];
-		}))
+		})
+		var retVal = service.init(fullDeps)
+		return retVal;
 	}
 	this.registry = {
 		apply:apply,
