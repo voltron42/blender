@@ -10,11 +10,11 @@
             throw new Error("XML attributes must be an object.");
         }
         if (Object.keys(obj.attrs).filter(function(key){
-            return typeof obj.attrs[key] !=  "string";
+            return typeof obj.attrs[key] !=  "string" && typeof obj.attrs[key] !=  "number" && typeof obj.attrs[key] !=  "boolean";
         }).length > 0) {
-            throw new Error("XML attributes must be strings.");
+            throw new Error("XML attributes must be primitives.");
         }
-        if (obj.children instanceof Array) {
+        if (!(obj.children instanceof Array)) {
             throw new Error("XML children must be an array");
         }
         var deepErrors = obj.children.filter(function(child) {
@@ -41,21 +41,19 @@
     var toXML = function(obj) {
         var out = ["<",obj.name];
         Object.keys(obj.attrs).forEach(function(key){
-            out = [].concat(" ",key,"=\"",obj.attrs[key],"\"");
+            out = [].concat(out," ",key,"=",obj.attrs[key]);
         })
-        if (children.length > 0) {
-            out = out.concat(obj.children.map(function(child){
-                if (typeof child == "string") {
-                    return child;
-                } else if (typeof child) {
-                    return child.toString();
-                } else {
-                    return "";
-                }
-            }))
-        } else {
-            out.push("/>");
-        }
+		out.push(">");
+		out = out.concat(obj.children.map(function(child){
+			if (typeof child == "string") {
+				return child;
+			} else if (typeof child) {
+				return child.toString();
+			} else {
+				return "";
+			}
+		}))
+		out = out.concat("</",obj.name,">")
         return out.join("");
     }
     var XML = function(obj) {
