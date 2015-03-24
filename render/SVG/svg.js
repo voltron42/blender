@@ -41,6 +41,7 @@
             });
         },
         text:function(text,x,y,hAlign,vAlign,attrs)  {
+          text = text || "";
 			if (!horizontal[hAlign]) {
 				hAlign = "middle"
 			}
