@@ -1,4 +1,5 @@
 (function() {
+	var me = this;
 	var register = {};
 	var apply = function(name, deps, init) {
 		deps = deps || [];
@@ -16,7 +17,7 @@
 		var fullDeps = service.deps.map(function(dep) {
 			return depObj[dep];
 		})
-		var retVal = service.init(fullDeps)
+		var retVal = service.init.apply(me,fullDeps)
 		return retVal;
 	}
 	this.registry = {
