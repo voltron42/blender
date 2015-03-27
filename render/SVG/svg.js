@@ -26,7 +26,8 @@
                     x:x,
                     y:y,
                     w:w,
-                    h:h
+                    h:h,
+					"stroke-width":1
                 }.merge(attrs)
             });
         },
@@ -62,12 +63,6 @@
         svg:function(w,h,contents) {
 			console.log("svg contents:");
 			console.log(contents);
-			console.log(contents.map(function(c){
-				return c.getXML();
-			}))
-			console.log(contents.map(function(c){
-				return c.toString();
-			}).join(""))
             if (contents.filter(function(content) {
                 return !(content instanceof SvgElement);
             }).length > 0) {
@@ -79,9 +74,9 @@
                     width:w,
                     height:h
                 },
-                children:contents.map(function(child) {
-                    return child.getXML()
-                })
+                children:contents.map(function(c) {
+					return c.getXML();
+				})
             });
         }
     }

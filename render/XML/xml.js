@@ -48,8 +48,8 @@
 		out = out.concat(obj.children.map(function(child){
 			if (typeof child == "string") {
 				return child;
-			} else if (typeof child) {
-				return child.toString();
+			} else if (typeof child == "object") {
+				return toXML(child);
 			} else {
 				return "";
 			}
