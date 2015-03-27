@@ -15,6 +15,7 @@
             throw new Error("XML attributes must be primitives.");
         }
         if (!(obj.children instanceof Array)) {
+			console.log(obj)
             throw new Error("XML children must be an array");
         }
         var deepErrors = obj.children.filter(function(child) {
@@ -33,7 +34,7 @@
             throw deepErrors[0];
         }
         if (obj.children.filter(function(child) {
-            return typeof child != "string" && typeof child != "object";
+            return typeof child != "string" && typeof child != "object" && typeof child != "number" && typeof child != "boolean";
         }).length > 0) {
             throw new Error("XML children must either be an XML object or a string.");
         }
@@ -58,8 +59,10 @@
     }
     var XML = function(obj) {
         this.name = obj.name;
-        this.attrs = obj.attrs || {};
-        this.children = obj.children || [];
+        obj.attrs = obj.attrs || {};
+        obj.children = obj.children || [];
+        this.attrs = obj.attrs;
+        this.children = obj.children;
         verify(this);
         
         this.toString = function() {
@@ -67,4 +70,4 @@
         }
     }
     this.XML = XML;
-})()
+})();

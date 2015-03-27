@@ -1,5 +1,5 @@
 (function(){
-	this.Registry = function() {
+	var Registry = function() {
 		var register = {}
 		this.apply = function(name, dependencies, init) {
 			if (register[name]) {
@@ -39,4 +39,5 @@
 			return recurse(name, [])
 		}
 	}
-})()
+	this.registry = new Registry();
+})();

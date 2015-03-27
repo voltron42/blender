@@ -60,6 +60,14 @@
             });
         },
         svg:function(w,h,contents) {
+			console.log("svg contents:");
+			console.log(contents);
+			console.log(contents.map(function(c){
+				return c.getXML();
+			}))
+			console.log(contents.map(function(c){
+				return c.toString();
+			}).join(""))
             if (contents.filter(function(content) {
                 return !(content instanceof SvgElement);
             }).length > 0) {
@@ -77,4 +85,4 @@
             });
         }
     }
-})()
+})();

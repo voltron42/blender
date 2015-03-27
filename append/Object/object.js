@@ -22,6 +22,6 @@
     out.apply(other, override)
     return out
   }
-})()
+})();
 
 
