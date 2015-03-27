@@ -76,7 +76,7 @@
 		me.exp = new ExpressionTemplate(token);
 		me.list = buildFromList(parser);
 		me.apply = function(data,index,parent) {
-			var collection = me.exp.apply(data,index,parent);
+			var collection = me.exp.apply(data,index,parent) || [];
 			if (typeof collection == "object") {
 				var _parent = {
 					data:data

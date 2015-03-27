@@ -36,6 +36,13 @@ describe("Mint template", function(){
 		var expected = "Tonight's lottery numbers are 5, 7, 12, 17, 25, 28, and the powerball is 16.";
 		expect(tpl.apply(data)).to.equal(expected);
 	});
+	it("null list", function() {
+		var str = "Tonight's lottery numbers are $!numbers$$=value$, $$$and the powerball is $=powerball$.";
+		var tpl = Mint.compile(str);
+		var data = {numbers:null,powerball:16};
+		var expected = "Tonight's lottery numbers are and the powerball is 16.";
+		expect(tpl.apply(data)).to.equal(expected);
+	});
 	it("primitive list", function() {
 		var str = "Tonight's lottery numbers are $!numbers$$=_parent.data.numbers[_index]$, $$$and the powerball is $=powerball$.";
 		var tpl = Mint.compile(str);
