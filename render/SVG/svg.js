@@ -25,8 +25,8 @@
                 attrs:{
                     x:x,
                     y:y,
-                    w:w,
-                    h:h,
+                    width:w,
+                    height:h,
 					"stroke-width":1
                 }.merge(attrs)
             });
