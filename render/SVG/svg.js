@@ -42,6 +42,9 @@
             });
         },
         text:function(text,x,y,hAlign,vAlign,attrs)  {
+            if (typeof text != "string") {
+                text = "" + text;
+            }
           text = text || "";
 			if (!horizontal[hAlign]) {
 				hAlign = "middle"
