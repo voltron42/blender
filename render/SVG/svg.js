@@ -18,6 +18,13 @@
             return svg.toString();
         }
     }
+	var validateContents = function(contents) {
+		if (contents.filter(function(content) {
+			return !(content instanceof SvgElement);
+		}).length > 0) {
+			throw new Error("SVG can only contain SVG Elements");
+		}
+	}
     this.SVG = {
         rect:function(x,y,w,h,attrs) {
             return new SvgElement({
@@ -63,14 +70,22 @@
                 children:[text]
             });
         },
+		link:function(link,attrs,contents) {
+			validateContents(contents);
+			return new SvgElement({
+                name:"a",
+                attrs:{
+                    "xlink:href":link,
+                }.merge(attrs),
+                children:contents.map(function(c) {
+					return c.getXML();
+				})
+            });
+		},
         svg:function(w,h,contents) {
 			console.log("svg contents:");
 			console.log(contents);
-            if (contents.filter(function(content) {
-                return !(content instanceof SvgElement);
-            }).length > 0) {
-                throw new Error("SVG can only contain SVG Elements");
-            }
+			validateContents(contents);
             return new SvgElement({
                 name:"svg",
                 attrs:{
