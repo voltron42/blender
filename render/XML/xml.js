@@ -1,5 +1,10 @@
 (function(){
     var verify = function(obj) {
+		obj.attrs = obj.attrs || {};
+		obj.children = obj.children || [];
+		Object.keys(obj.attrs).forEach(function(key){
+			obj.attrs[key] = obj.attrs[key] || "";
+		})
         if (typeof obj.name != "string") {
             throw new Error("XML name must be a string.");
         }
@@ -40,6 +45,7 @@
         }
     }
     var toXML = function(obj) {
+		verify(obj)
         var out = ["<",obj.name];
         Object.keys(obj.attrs).forEach(function(key){
             out = [].concat(out," ",key,"=",obj.attrs[key]);
@@ -63,8 +69,6 @@
         obj.children = obj.children || [];
         this.attrs = obj.attrs;
         this.children = obj.children;
-        verify(this);
-        
         this.toString = function() {
             return toXML(this);
         }
