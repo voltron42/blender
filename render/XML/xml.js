@@ -44,18 +44,18 @@
             throw new Error("XML children must either be an XML object or a string.");
         }
     }
-    var toXML = function(obj) {
+    var toXML = function(obj, useQuotes) {
 		verify(obj)
         var out = ["<",obj.name];
         Object.keys(obj.attrs).forEach(function(key){
-            out = [].concat(out," ",key,"=",obj.attrs[key]);
+            out = [].concat(out," ",key,"=",(useQuotes?'"':""),obj.attrs[key],(useQuotes?'"':""));
         })
 		out.push(">");
 		out = out.concat(obj.children.map(function(child){
 			if (typeof child == "string") {
 				return child;
 			} else if (typeof child == "object") {
-				return toXML(child);
+				return toXML(child, useQuotes);
 			} else {
 				return "";
 			}
@@ -63,14 +63,14 @@
 		out = out.concat("</",obj.name,">")
         return out.join("");
     }
-    var XML = function(obj) {
+    var XML = function(obj, useQuotes) {
         this.name = obj.name;
         obj.attrs = obj.attrs || {};
         obj.children = obj.children || [];
         this.attrs = obj.attrs;
         this.children = obj.children;
         this.toString = function() {
-            return toXML(this);
+            return toXML(this, useQuotes);
         }
     }
     this.XML = XML;
