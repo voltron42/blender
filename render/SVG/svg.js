@@ -10,21 +10,20 @@
         "middle":"central"
     }
     var SvgElement = function(xmlObj) {
-        var svg = new XML(xmlObj);
         this.getXML = function() {
             return xmlObj;
         }
         this.toString = function() {
-            return svg.toString();
+            return new XML(xmlObj).toString();
         }
     }
-	var validateContents = function(contents) {
-		if (contents.filter(function(content) {
-			return !(content instanceof SvgElement);
-		}).length > 0) {
-			throw new Error("SVG can only contain SVG Elements");
-		}
-	}
+  	var validateContents = function(contents) {
+    		if (contents.filter(function(content) {
+    			   return !(content instanceof SvgElement);
+    		}).length > 0) {
+    			   throw new Error("SVG can only contain SVG Elements");
+    		}
+  	}
     this.SVG = {
         rect:function(x,y,w,h,attrs) {
             return new SvgElement({
@@ -34,7 +33,7 @@
                     y:y,
                     width:w,
                     height:h,
-					"stroke-width":1
+                    "stroke-width":1
                 }.merge(attrs)
             });
         },
@@ -52,13 +51,13 @@
             if (typeof text != "string") {
                 text = "" + text;
             }
-          text = text || "";
-			if (!horizontal[hAlign]) {
-				hAlign = "middle"
-			}
-			if (!vertical[vAlign]) {
-				vAlign = "middle"
-			}
+                text = text || "";
+      			if (!horizontal[hAlign]) {
+                hAlign = "middle"
+      			}
+      			if (!vertical[vAlign]) {
+      			    vAlign = "middle"
+      			}
             return new SvgElement({
                 name:"text",
                 attrs:{
@@ -70,22 +69,20 @@
                 children:[text]
             });
         },
-		link:function(link,attrs,contents) {
-			validateContents(contents);
-			return new SvgElement({
+    		link:function(link,attrs,contents) {
+      			validateContents(contents);
+      			return new SvgElement({
                 name:"a",
                 attrs:{
                     "xlink:href":link,
                 }.merge(attrs),
                 children:contents.map(function(c) {
-					return c.getXML();
-				})
+                    return c.getXML();
+    				    })
             });
-		},
+    		},
         svg:function(w,h,contents) {
-			console.log("svg contents:");
-			console.log(contents);
-			validateContents(contents);
+      			validateContents(contents);
             return new SvgElement({
                 name:"svg",
                 attrs:{
@@ -93,8 +90,8 @@
                     height:h
                 },
                 children:contents.map(function(c) {
-					return c.getXML();
-				})
+                    return c.getXML();
+	              })
             });
         }
     }

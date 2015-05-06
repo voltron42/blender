@@ -20,7 +20,7 @@
             throw new Error("XML attributes must be primitives.");
         }
         if (!(obj.children instanceof Array)) {
-			console.log(obj)
+            console.log(obj)
             throw new Error("XML children must be an array");
         }
         var deepErrors = obj.children.filter(function(child) {
@@ -45,22 +45,26 @@
         }
     }
     var toXML = function(obj, useQuotes) {
-		verify(obj)
+  	    verify(obj)
         var out = ["<",obj.name];
         Object.keys(obj.attrs).forEach(function(key){
             out = [].concat(out," ",key,"=",(useQuotes?'"':""),obj.attrs[key],(useQuotes?'"':""));
         })
-		out.push(">");
-		out = out.concat(obj.children.map(function(child){
-			if (typeof child == "string") {
-				return child;
-			} else if (typeof child == "object") {
-				return toXML(child, useQuotes);
-			} else {
-				return "";
-			}
-		}))
-		out = out.concat("</",obj.name,">")
+        if (obj.children.length <= 0) {
+            out.push("/>")
+        } else {
+        		out.push(">");
+        		out = out.concat(obj.children.map(function(child){
+          			if (typeof child == "string") {
+          				    return child;
+          			} else if (typeof child == "object") {
+          				    return toXML(child, useQuotes);
+          			} else {
+          				    return "";
+          			}
+        		}))
+        		out = out.concat("</",obj.name,">")
+        }
         return out.join("");
     }
     var XML = function(obj, useQuotes) {
