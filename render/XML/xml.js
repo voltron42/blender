@@ -45,7 +45,7 @@
         }).forEach(function(key){
             out = [].concat(out," ",key,"=",(useQuotes?'"':""),toAttr(node.attrs[key]),(useQuotes?'"':""));
         })
-        if (node.children.length <= 0) {
+        if (node.children.length <= 0 && useQuotes) {
             out.push("/>")
         } else {
         		out.push(">");
